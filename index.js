@@ -19,6 +19,8 @@ const newTask = (name, description) =>{
     completed = 'no';
     deleted = 'no';
     projects[currentProject].tasks.push({ name, description, priority, due_date, done, completed, deleted })
+    deleteRows();
+    generateRows();
 }
 
 const deleteProject= () => {
@@ -27,6 +29,7 @@ const deleteProject= () => {
             projects.splice(i, 1);
         };
     };
+    refreshDOM();
 };
 
 const deleteTask = () =>{
@@ -35,6 +38,7 @@ const deleteTask = () =>{
                 projects[currentProject].tasks.splice(i, 1);
             }
         }
+        refreshDOM();
     }
 // ---------------------------------------DOM---------------------------------------------------
 //since onclick needs an anonymous function it will have to perform 2 tasks
@@ -48,7 +52,9 @@ const generateProjectTabs = () =>{
             if(projects[i].name == tab.id){
                 currentProject = i
             }
-        }}
+        }
+    refreshDOM()
+    }
     let projects_div = document.querySelector('#projects')
     projects_div.appendChild(tab);
     };
@@ -65,7 +71,11 @@ const generateRows = () =>{
        let priority = row.insertCell(3);
        name.innerText = projects[currentProject].tasks[i].name;
        dueDate.innerText = projects[currentProject].tasks[i].due_date;
-       deleted.innerText = projects[currentProject].tasks[i].deleted;
+       deleted.innerHTML = "<button>"+projects[currentProject].tasks[i].deleted+"</button>"
+       deleted.onclick = function(){
+           projects[currentProject].tasks[i].deleted='yes';
+           deleteTask();
+       }
        priority.innerText = projects[currentProject].tasks[i].priority;
     }
 }
@@ -88,4 +98,4 @@ newProject('jogar')
 newTask('limpar','ok');
 newTask('varrer', 'usa vassoura');
 
-generateRows();
+generateProjectTabs();
