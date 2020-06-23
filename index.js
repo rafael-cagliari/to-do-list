@@ -1,17 +1,13 @@
 const projects = [];
 let currentProject = 0;
+
 const newProject = (name) =>{
     const tasks = [];
     const deleted = 'no';
     projects.push({ name, tasks, deleted });
+    generateProjectTabs()
 };
 
-//voltar aqui e mudar de acordo com o DOM
-const currentProjectSetter = (project) =>{
-    currentProject=project;
-}
-
-//voltar aqui e mudar de acordo com o DOM
 const newTask = (name, description) =>{
     priority = 2;
     due_date = "01/01/2021";
@@ -19,18 +15,20 @@ const newTask = (name, description) =>{
     completed = 'no';
     deleted = 'no';
     projects[currentProject].tasks.push({ name, description, priority, due_date, done, completed, deleted })
-    deleteRows();
-    generateRows();
+    refreshDOM();
 }
 
-const deleteProject= () => {
-    for (let i = 0; i<projects.length; ++i){
-        if(projects[i].deleted=='yes'){
-            projects.splice(i, 1);
-        };
-    };
-    refreshDOM();
-};
+const deleteProject= () => {    
+    let projects_div = document.querySelector('#projects');
+    if(projects.length == 0){projects_div.remove(projects_div.firstElementChild); return};
+    for(let i = 0; i < projects_div.children.length ; ++i){
+        if(projects_div.children[i].id == projects[currentProject].name){
+            projects_div.removeChild(projects_div.children[i]);
+        }
+    }
+    projects.splice(currentProject, 1);
+    refreshDOM()}
+;
 
 const deleteTask = () =>{
         for (let i = 0; i<projects[currentProject].tasks.length; ++i){
@@ -43,6 +41,8 @@ const deleteTask = () =>{
 // ---------------------------------------DOM---------------------------------------------------
 //since onclick needs an anonymous function it will have to perform 2 tasks
 const generateProjectTabs = () =>{
+    let projects_div = document.querySelector('#projects')
+    projects_div.innerHTML = '';
     for (let i = 0; i<projects.length; ++i){
     let tab = document.createElement('button');
     tab.innerText = projects[i].name;
@@ -55,13 +55,14 @@ const generateProjectTabs = () =>{
         }
     refreshDOM()
     }
-    let projects_div = document.querySelector('#projects')
     projects_div.appendChild(tab);
+    refreshDOM()
     };
 }
 
 const generateRows = () =>{
-    let table = document.querySelector('table')
+    let table = document.querySelector('#tasks')
+    if(projects[currentProject] == undefined){return}
     for(let i = 0; i<projects[currentProject].tasks.length; ++i){
        let row = table.insertRow();
        row.id = projects[currentProject].tasks[i].name;
@@ -86,7 +87,7 @@ const refreshDOM = () =>{
 }
 
 const deleteRows = () =>{
-    let table = document.querySelector('table');
+    let table = document.querySelector('#tasks');
     let rows_len = document.querySelectorAll('tr').length-1;
     for (i=rows_len; i>0; --i){
         table.deleteRow(i)
