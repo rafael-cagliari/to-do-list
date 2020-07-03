@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>To-Do List</title>
+</head>
+<body>
+    <table id='tasks' style='text-align: left;'>
+		<tr id='contents' class='contents'>
+            <th>Name</th>
+		    <th>Due date</th>
+		    <th>Delete</th>
+		    <th>Priority</th>
+        </tr>
+    </table>
+    <div id = 'projects'></div>
+    <button onclick= 'deleteProject()'>Delete project</button>
+
+    <form>
+        <h1>New Project</h1>
+        <input type='text' id='new_project' placeholder="New Project" maxlength="70">
+   </form>
+
+   <button onclick='newProject()'>New Project</button>
+
+    <form>
+        <h1>New Task</h1>
+        <input type='text' id='new_task' placeholder="New task" maxlength="70">
+        <h1>Description</h1>
+        <input type='text' id='description' placeholder="Description" maxlength="120">
+        <div>Task urgency</div>
+             <input type="radio" id="low" name="urgency" value="low">
+             <label for="low">Low</label><br>
+             <input type="radio" id="medium" name="urgency" value="medium">
+             <label for="medium">Medium</label><br>
+             <input type="radio" id="high" name="urgency" value="high">
+             <label for="high">High</label><br>
+   </form>
+
+   <button onclick='newTask()'>New Task</button>
+
+<script src='index.js'></script>
+</body>
+</html>

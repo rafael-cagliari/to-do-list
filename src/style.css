@@ -1,0 +1,40 @@
+.container{
+    height:100vh;
+    display:grid;
+    grid-gap: 1.5vh;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 10vh  ;
+    grid-template-areas: "h h"
+                          "p t";
+}
+
+.head{
+    grid-area: h;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 32px;
+    font-weight: 900;
+    font-style: italic;
+    z-index: 1;
+    background-color: white;
+    text-decoration: line-through;
+}
+
+}
+.task{
+    grid-area: t;
+    text-align: left;
+}
+
+.projects{
+    grid-area: p;
+    background: linear-gradient(0deg, rgba(67,140,244,1) 0%, rgba(93,100,233,1) 54%, rgba(133,99,224,1) 100%);
+    display: inline-block;
+    border-radius: 18px;
+    height: 100%;
+}
+
+th, td{
+    padding-right:20px;
+    text-align:initial;
+}
